@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matoshri Event Registration System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Section -->
+    <div id="loginContainer" class="login-container">
+        <div class="login-box">
+            <h1>Matoshri Event Registration System</h1>
+            <h2 id="loginHeading" style="display: block;">Login</h2>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="loginEmail">Email *</label>
+                    <input type="email" id="loginEmail" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password *</label>
+                    <input type="password" id="loginPassword" name="password" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-success btn-block">Login</button>
+                <p class="register-link">
+                    Don't have an account? <a href="#" id="showRegister">Register here</a>
+                </p>
+            </form>
+
+            <!-- Register Form (hidden by default) -->
+            <form id="registerForm" class="login-form" style="display: none;">
+                <h2>Register</h2>
+                <div class="form-group">
+                    <label for="registerName">Full Name *</label>
+                    <input type="text" id="registerName" name="name" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email * (used as username)</label>
+                    <input type="email" id="registerEmail" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password * (min 6 characters)</label>
+                    <input type="password" id="registerPassword" name="password" required minlength="6" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label for="registerRole">Role *</label>
+                    <select id="registerRole" name="role" required>
+                        <option value="user">👤 User (Student)</option>
+                        <option value="admin">👨‍🏫 Admin (Teacher)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success btn-block">Register</button>
+                <p class="register-link">
+                    Already have an account? <a href="#" id="showLogin">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Application (hidden until login) -->
+    <div id="mainContainer" class="container" style="display: none;">
+        <header>
+            <h1>Matoshri Event Registration System</h1>
+            <nav>
+                <span id="userInfo" class="user-info"></span>
+                <button id="homeBtn" class="btn btn-primary">Home</button>
+                <button id="addEventBtn" class="btn btn-success" style="display: none;" title="Create new event (Admin only)">Add Event</button>
+                <button id="participantsBtn" class="btn btn-primary">Participants</button>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Home Section - Display Events -->
+            <section id="homeSection" class="section active">
+                <h2>All Events</h2>
+                <div id="eventsList" class="events-grid">
+                    <!-- Events will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Add Event Section -->
+            <section id="addEventSection" class="section">
+                <h2>Add New Event</h2>
+                <form id="eventForm" class="event-form">
+                    <div class="form-group">
+                        <label for="eventName">Event Name *</label>
+                        <input type="text" id="eventName" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventDate">Date *</label>
+                        <input type="datetime-local" id="eventDate" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventVenue">City/Venue *</label>
+                        <input type="text" id="eventVenue" name="venue" placeholder="e.g., New York, Convention Center" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventOrganizer">Organizer *</label>
+                        <input type="text" id="eventOrganizer" name="organizer" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventDescription">Description</label>
+                        <textarea id="eventDescription" name="description" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maxParticipants">Max Participants *</label>
+                        <input type="number" id="maxParticipants" name="max_participants" min="1" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Create Event</button>
+                        <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Participants Section -->
+            <section id="participantsSection" class="section">
+                <h2>All Participants</h2>
+                <div id="participantsList" class="events-grid">
+                    <!-- Participants will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Add Participant Section -->
+            <section id="addParticipantSection" class="section">
+                <h2>Add New Participant</h2>
+                <form id="participantForm" class="event-form">
+                    <div class="form-group">
+                        <label for="participantName">Name *</label>
+                        <input type="text" id="participantName" name="name" required minlength="2">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="participantEmail">Email *</label>
+                        <input type="email" id="participantEmail" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="participantPhone">Phone * (10 digits)</label>
+                        <input type="tel" id="participantPhone" name="phone" pattern="[0-9]{10}" placeholder="1234567890" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="participantDepartment">Department *</label>
+                        <input type="text" id="participantDepartment" name="department" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="participantYear">Year *</label>
+                        <select id="participantYear" name="year" required>
+                            <option value="">Select Year</option>
+                            <option value="First">First</option>
+                            <option value="Second">Second</option>
+                            <option value="Third">Third</option>
+                            <option value="Fourth">Fourth</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Create Participant</button>
+                        <button type="button" id="cancelParticipantBtn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register Participant for Event</h2>
+                <span class="modal-close" onclick="closeRegistrationModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="participantNameDisplay" class="participant-name"></p>
+                <div class="form-group">
+                    <label for="eventSelect">Select Event *</label>
+                    <select id="eventSelect" required>
+                        <option value="">Loading events...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="registerParticipant()">Register</button>
+                <button type="button" class="btn btn-secondary" onclick="closeRegistrationModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
