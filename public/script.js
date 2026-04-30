@@ -1,5 +1,5 @@
 // API Base URL
-const API_URL = 'http://localhost:3000';
+const API_URL = window.location.origin; // Dynamically uses the current server's URL
 
 // DOM Elements
 const loginContainer = document.getElementById('loginContainer');
