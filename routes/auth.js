@@ -29,14 +29,7 @@ router.post('/register', async (req, res) => {
       userRole = 'user';
     }
 
-    // Security: Only allow admin registration if current user is admin
-    // If not logged in or not admin, force 'user' role
-    if (userRole === 'admin') {
-      if (!req.session || !req.session.userId || req.session.userRole !== 'admin') {
-        // Don't return error, just set role to user
-        userRole = 'user';
-      }
-    }
+    // Allow users to self-register with their chosen role (admin or user)
 
     // Check if user already exists
     const existingUser = await User.findOne({
